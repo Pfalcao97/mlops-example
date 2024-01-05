@@ -10,3 +10,16 @@ format:
 
 lint:
 	pylint *.py
+
+start-docker:
+	systemctl --user start docker-desktop
+
+delete-docker:
+	docker image rm mlops-image 
+
+create-docker:
+	docker build -t mlops-image . 
+	docker run -p 8000:8000 --rm --name mlops-container mlops-image 
+
+docker:
+	start-docker delete-docker create-docker
