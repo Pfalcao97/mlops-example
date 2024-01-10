@@ -1,10 +1,11 @@
-name: Build and Deploy to Cloud Run
+name: Deploy to Cloud Run from Source
 
 on:
   push:
     branches: [ "main" ]
 
 env:
+  PROJECT_ID: '${{ secrets.GOOGLE_PROJECT }}'
   SERVICE: 'mlops-example'
   REGION: 'us-central1'
 
@@ -24,17 +25,16 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.SERVICE_ACCOUNT_CREDENTIALS}}'
-
+          credentials_json: '${{ secrets.SERVICE_ACCOUNT_CREDENTIALS }}'
 
       - name: Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v2
+        uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          # NOTE: If using a pre-built image, update the image name here
-          image: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/${{ env.SERVICE }}:${{ github.sha }}
+          # NOTE: If required, update to the appropriate source folder
+          source: ./
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
