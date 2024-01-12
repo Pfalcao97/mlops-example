@@ -49,12 +49,12 @@ jobs:
           docker push ${{ env.REGION }}-docker.pkg.dev/$GOOGLE_PROJECT/${{ env.REPOSITORY }}/${{ env.APP_NAME }}:latest
 
       - name: Run container from Artifact Image
-        run: |
-          gcloud run deploy ${{ env.APP_NAME }} \
-                 --image ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/${{ env.REPOSITORY }}/${{ env.APP_NAME }}:latest \ 
-                 --project ${{ secrets.GOOGLE_PROJECT }} \
-                 --region ${{ env.REGION }} \
-                 --port 8000
+        run: >
+          gcloud run deploy ${{ env.APP_NAME }} 
+          --image ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/${{ env.REPOSITORY }}/${{ env.APP_NAME }}:latest  
+          --project ${{ secrets.GOOGLE_PROJECT }} 
+          --region ${{ env.REGION }} 
+          --port 8000
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
