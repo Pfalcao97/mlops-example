@@ -33,14 +33,14 @@ jobs:
       - name: Run tests with pytest
         run: pytest ./tests/test.py
 
-      - name: Install the gcloud cli on actions's ubuntu machine
-        uses: google-github-actions/setup-gcloud@v2 #https://github.com/google-github-actions/setup-gcloud
+      - name: Install the gcloud cli on actions ubuntu machine
+        uses: google-github-actions/setup-gcloud@v0 #https://github.com/google-github-actions/setup-gcloud
         with:
           project_id: ${{ secrets.GOOGLE_PROJECT }}
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_CREDENTIALS }}
           export_default_credentials: true
 
-      - name: Build and push the docker image to Artifact usign gcloud
+      - name: Build and push the docker image to Artifact using gcloud
         env:
           GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
         run: |
