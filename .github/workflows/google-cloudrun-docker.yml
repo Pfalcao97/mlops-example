@@ -21,6 +21,18 @@ jobs:
       - name: Checkout code so that workflow can access it
         uses: actions/checkout@v4 #https://github.com/actions/checkout
 
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install pytest
+
+      - name: Run tests with pytest
+        run: pytest ./tests/test.py
+
       - name: Install the gcloud cli on actions's ubuntu machine
         uses: google-github-actions/setup-gcloud@v2 #https://github.com/google-github-actions/setup-gcloud
         with:
